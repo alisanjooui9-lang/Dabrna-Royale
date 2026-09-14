@@ -2,167 +2,155 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <meta name="theme-color" content="#080b16">
-
-  <title>Dabrna Royale 👑</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dabrna Royale</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="game-page">
 
-<div class="app game-page">
+<div class="game-app">
 
-  <!-- HEADER -->
+  <!-- Header -->
   <header class="game-header">
-
-    <button class="back-btn" id="backButton">
-      →
-    </button>
+    <button class="back-btn" onclick="goHome()">←</button>
 
     <div class="game-title">
-      <h2>👑 Dabrna Royale</h2>
-      <span id="modeLabel">در حال آماده‌سازی...</span>
+      <span>👑</span>
+      <div>
+        <strong>دبرنا رویال</strong>
+        <small id="modeLabel">بازی</small>
+      </div>
     </div>
 
-    <div class="coins">
+    <div class="game-coins">
       🪙 <span id="gameCoins">0</span>
     </div>
-
   </header>
 
 
-  <!-- PLAYERS -->
-  <section class="panel players-panel">
-
-    <div class="player-grid" id="playersGrid">
-      <!-- Players ساخته می‌شوند -->
+  <!-- بازیکنان -->
+  <section class="players-panel">
+    <div class="section-title">
+      <span>👥 بازیکنان</span>
     </div>
 
+    <div id="playersGrid" class="players-grid"></div>
   </section>
 
 
-  <!-- MAIN GAME -->
-  <main class="game-board">
+  <!-- قسمت اصلی بازی -->
+  <main class="royale-board">
 
-    <!-- NUMBER -->
-    <section class="draw-card panel">
+    <!-- کیسه مهره -->
+    <section class="draw-area">
 
-      <div class="draw-title">
-        <span>🎲</span>
-        <b>شماره بازی</b>
+      <div class="bag-container">
+
+        <div class="bag-glow"></div>
+
+        <div id="bag" class="number-bag">
+          <div class="bag-rope"></div>
+
+          <div class="bag-face">
+            <span>🎲</span>
+          </div>
+
+          <div class="bag-logo">
+            DABRNA
+          </div>
+        </div>
+
+        <div id="drawBall" class="draw-ball">
+          <span id="drawNumber">—</span>
+        </div>
+
       </div>
 
-      <div class="draw-number" id="drawNumber">
-        ?
+      <div class="draw-info">
+        <strong id="drawStatus">در حال آماده‌سازی...</strong>
+        <small id="nextDrawTimer">مهره بعدی: ۱۰ ثانیه</small>
       </div>
-
-      <div class="draw-status" id="drawStatus">
-        برای شروع دکمه را بزن
-      </div>
-
-      <button class="draw-button" id="drawButton">
-        🎲 انتخاب شماره
-      </button>
 
     </section>
 
 
-    <!-- CARD -->
-    <section class="dabrna-card panel">
+    <!-- کارت بازیکن -->
+    <section class="my-card-section">
 
-      <div class="card-header">
-
+      <div class="card-heading">
         <div>
-          <span>🃏</span>
-          <b>کارت دبرنا</b>
+          <span class="card-crown">👑</span>
+          <strong>کارت دبرنای شما</strong>
         </div>
 
-        <div class="card-theme" id="cardThemeName">
-          Classic
-        </div>
-
+        <span id="cardThemeName" class="theme-label">
+          کلاسیک
+        </span>
       </div>
 
+      <div id="playerCard" class="dabrna-card"></div>
 
-      <div class="number-grid" id="numberGrid">
-
-        <!--
-          1 تا 90
-          توسط JavaScript ساخته می‌شود
-        -->
-
+      <div class="card-help">
+        🎯 با آمدن هر شماره، خانه مربوط به آن مشخص می‌شود.
       </div>
 
     </section>
 
 
-    <!-- ACTIONS -->
+    <!-- کارت بازیکنان دیگر -->
+    <section class="other-players-section">
+
+      <div class="section-title">
+        <span>🎮 کارت بازیکنان</span>
+      </div>
+
+      <div id="otherPlayersCards" class="other-cards"></div>
+
+    </section>
+
+
+    <!-- دکمه‌های پایین -->
     <section class="game-actions">
 
-      <button class="action-button hint" id="hintButton">
+      <button id="hintButton" class="game-action hint-action">
         💡 راهنما
-        <span>25 🪙</span>
+        <small>۲۵ 🪙</small>
       </button>
 
-      <button class="action-button bingo" id="bingoButton">
+      <button id="bingoButton" class="game-action bingo-action">
         🏆 دبرنا!
       </button>
 
     </section>
 
 
-    <!-- MESSAGE -->
-    <section class="game-message panel" id="gameMessage">
-      <span>🎯</span>
-      <p>منتظر شماره بعدی باش...</p>
-    </section>
+    <!-- پیام بازی -->
+    <div id="gameMessage" class="game-message"></div>
 
   </main>
 
 
-  <!-- WIN MODAL -->
-  <div class="modal-overlay" id="winModal">
+  <!-- مودال شروع -->
+  <div id="startModal" class="modal-overlay">
 
-    <div class="win-modal">
+    <div class="modal-card start-card">
 
-      <div class="win-trophy">
-        🏆
-      </div>
+      <div class="modal-icon">👑</div>
 
-      <h2>تبریک! 🎉</h2>
+      <h2>دبرنا رویال</h2>
 
-      <p id="winText">
-        تو برنده شدی!
+      <p>
+        آماده‌ای وارد بازی بشی؟
       </p>
 
-      <div class="reward-box">
-
-        <div>
-          <span>⭐</span>
-          <b id="rewardXp">+0 XP</b>
-        </div>
-
-        <div>
-          <span>🪙</span>
-          <b id="rewardCoins">+0</b>
-        </div>
-
-        <div>
-          <span>🏆</span>
-          <b id="rewardTrophy">+1</b>
-        </div>
-
+      <div class="difficulty-box">
+        <span>سطح بازی</span>
+        <strong id="difficultyName">معمولی</strong>
       </div>
 
-      <button class="primary-button" id="nextGameButton">
-        🎮 بازی بعدی
-      </button>
-
-      <button class="secondary-button" id="homeButton">
-        🏠 صفحه اصلی
+      <button id="startGameButton" class="primary-btn">
+        🎮 شروع بازی
       </button>
 
     </div>
@@ -170,44 +158,55 @@
   </div>
 
 
-  <!-- START MODAL -->
-  <div class="modal-overlay show" id="startModal">
+  <!-- مودال برد -->
+  <div id="winModal" class="modal-overlay hidden">
 
-    <div class="start-modal">
+    <div class="modal-card win-card">
 
-      <div class="start-icon">
-        👑
-      </div>
+      <div class="win-icon">🏆</div>
 
-      <h2>آماده‌ای؟</h2>
+      <h2 id="winnerTitle">دبرنا!</h2>
 
-      <p id="startDescription">
-        بازی در حال آماده‌سازی است...
+      <p id="winnerText">
+        شما برنده شدید!
       </p>
 
-      <div class="difficulty-box">
-
-        <span>🤖</span>
+      <div class="reward-box">
 
         <div>
-          <b>سطح حریف‌ها</b>
-          <small id="botDifficulty">
-            معمولی
-          </small>
+          <span>XP</span>
+          <strong id="rewardXP">+0</strong>
+        </div>
+
+        <div>
+          <span>سکه</span>
+          <strong id="rewardCoins">+0 🪙</strong>
+        </div>
+
+        <div>
+          <span>جام</span>
+          <strong id="rewardTrophy">+0 🏆</strong>
         </div>
 
       </div>
 
-      <button class="primary-button" id="startGameButton">
-        🚀 شروع بازی
-      </button>
+      <div class="modal-buttons">
+
+        <button id="nextGameButton" class="primary-btn">
+          🎮 بازی بعدی
+        </button>
+
+        <button onclick="goHome()" class="secondary-btn">
+          🏠 صفحه اصلی
+        </button>
+
+      </div>
 
     </div>
 
   </div>
 
 </div>
-
 
 <script src="game.js"></script>
 
