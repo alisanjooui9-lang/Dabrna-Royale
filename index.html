@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0b1020">
+  <title>Dabrna Royale 👑</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- Header -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">👑</div>
+        <div>
+          <h1>Dabrna Royale</h1>
+          <span>دبرنا رویال</span>
+        </div>
+      </div>
+
+      <div class="coins">
+        🪙 <span id="coinDisplay">500</span>
+      </div>
+    </header>
+
+    <!-- Welcome -->
+    <main class="home">
+
+      <section class="hero-card">
+        <div class="hero-crown">👑</div>
+
+        <h2>به Dabrna Royale خوش آمدی</h2>
+
+        <p>
+          وارد رقابت شو، برنده شو، Level بگیر و
+          دبرنای خودت رو شخصی‌سازی کن!
+        </p>
+
+        <div class="stats-preview">
+          <div>
+            <strong id="levelPreview">1</strong>
+            <small>Level</small>
+          </div>
+
+          <div>
+            <strong id="xpPreview">0</strong>
+            <small>XP</small>
+          </div>
+
+          <div>
+            <strong id="trophyPreview">0</strong>
+            <small>جام</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Age -->
+      <section class="setup-card" id="ageSection">
+
+        <div class="section-title">
+          <span>🎯</span>
+          <div>
+            <h3>اول یک محدوده سنی انتخاب کن</h3>
+            <p>برای تنظیم سطح اولیه حریف‌ها</p>
+          </div>
+        </div>
+
+        <div class="age-grid">
+
+          <button class="age-option" data-age="child">
+            <span>🌱</span>
+            <b>کودک</b>
+            <small>سطح آسان</small>
+          </button>
+
+          <button class="age-option" data-age="teen">
+            <span>⚡</span>
+            <b>نوجوان</b>
+            <small>سطح معمولی</small>
+          </button>
+
+          <button class="age-option" data-age="adult">
+            <span>🔥</span>
+            <b>بزرگسال</b>
+            <small>سطح سخت‌تر</small>
+          </button>
+
+        </div>
+
+        <div class="selected-info" id="ageInfo">
+          محدوده سنی را انتخاب کن
+        </div>
+
+      </section>
+
+      <!-- Game Modes -->
+      <section class="setup-card disabled" id="modeSection">
+
+        <div class="section-title">
+          <span>🎮</span>
+          <div>
+            <h3>حالت بازی</h3>
+            <p>تعداد بازیکن‌ها را انتخاب کن</p>
+          </div>
+        </div>
+
+        <div class="mode-list">
+
+          <button class="mode-option" data-mode="1">
+            <div class="mode-icon">👤</div>
+            <div class="mode-text">
+              <b>تک‌نفره</b>
+              <span>تو در برابر Botها</span>
+            </div>
+            <div class="arrow">‹</div>
+          </button>
+
+          <button class="mode-option" data-mode="2">
+            <div class="mode-icon">👥</div>
+            <div class="mode-text">
+              <b>دو نفره</b>
+              <span>تو + ۱ Bot</span>
+            </div>
+            <div class="arrow">‹</div>
+          </button>
+
+          <button class="mode-option" data-mode="3">
+            <div class="mode-icon">👥</div>
+            <div class="mode-text">
+              <b>سه نفره</b>
+              <span>تو + ۲ Bot</span>
+            </div>
+            <div class="arrow">‹</div>
+          </button>
+
+          <button class="mode-option" data-mode="4">
+            <div class="mode-icon">👥</div>
+            <div class="mode-text">
+              <b>چهار نفره</b>
+              <span>تو + ۳ Bot</span>
+            </div>
+            <div class="arrow">‹</div>
+          </button>
+
+        </div>
+
+      </section>
+
+      <!-- Bottom -->
+      <section class="quick-actions">
+
+        <button class="quick-btn" onclick="openShop()">
+          <span>🛒</span>
+          <b>فروشگاه</b>
+        </button>
+
+        <button class="quick-btn" onclick="showProfile()">
+          <span>🏆</span>
+          <b>پیشرفت</b>
+        </button>
+
+      </section>
+
+    </main>
+
+    <footer>
+      <span>Dabrna Royale</span>
+      <span>•</span>
+      <span>Play • Compete • Win</span>
+    </footer>
+
+  </div>
+
+  <script>
+    /*
+      Dabrna Royale
+      Main Menu
+    */
+
+    const STORAGE_KEY = "dabrnaRoyalePlayer";
+
+    const defaultPlayer = {
+      ageGroup: null,
+      level: 1,
+      xp: 0,
+      coins: 500,
+      trophies: 0,
+      tokenColor: "blue",
+      cardTheme: "classic"
+    };
+
+    let player = loadPlayer();
+
+    function loadPlayer() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if (saved) {
+          return {
+            ...defaultPlayer,
+            ...JSON.parse(saved)
+          };
+        }
+      } catch (error) {
+        console.log("Storage error:", error);
+      }
+
+      return { ...defaultPlayer };
+    }
+
+    function savePlayer() {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(player)
+      );
+    }
+
+    function updateUI() {
+      document.getElementById("coinDisplay").textContent =
+        player.coins;
+
+      document.getElementById("levelPreview").textContent =
+        player.level;
+
+      document.getElementById("xpPreview").textContent =
+        player.xp;
+
+      document.getElementById("trophyPreview").textContent =
+        player.trophies;
+
+      if (player.ageGroup) {
+        document
+          .querySelectorAll(".age-option")
+          .forEach(btn => {
+            btn.classList.toggle(
+              "selected",
+              btn.dataset.age === player.ageGroup
+            );
+          });
+
+        document
+          .getElementById("modeSection")
+          .classList.remove("disabled");
+
+        const names = {
+          child: "🌱 کودک — سطح آسان",
+          teen: "⚡ نوجوان — سطح معمولی",
+          adult: "🔥 بزرگسال — سطح سخت‌تر"
+        };
+
+        document.getElementById("ageInfo").textContent =
+          names[player.ageGroup];
+      }
+    }
+
+    document
+      .querySelectorAll(".age-option")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          player.ageGroup = button.dataset.age;
+
+          savePlayer();
+          updateUI();
+
+          document
+            .getElementById("modeSection")
+            .scrollIntoView({
+              behavior: "smooth",
+              block: "center"
+            });
+        });
+
+      });
+
+    document
+      .querySelectorAll(".mode-option")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          if (!player.ageGroup) {
+            return;
+          }
+
+          const mode = button.dataset.mode;
+
+          localStorage.setItem(
+            "dabrnaRoyaleGameMode",
+            mode
+          );
+
+          savePlayer();
+
+          window.location.href =
+            "game.html?mode=" + encodeURIComponent(mode);
+
+        });
+
+      });
+
+    function openShop() {
+      window.location.href = "shop.html";
+    }
+
+    function showProfile() {
+      alert(
+        "🏆 Level: " + player.level +
+        "\n⭐ XP: " + player.xp +
+        "\n🪙 سکه: " + player.coins +
+        "\n🏆 جام: " + player.trophies
+      );
+    }
+
+    updateUI();
+  </script>
+
+</body>
+          </html>
