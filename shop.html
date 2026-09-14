@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#080b16">
+
+  <title>فروشگاه | Dabrna Royale</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .shop-page {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .shop-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .shop-heading {
+      text-align: center;
+      flex: 1;
+    }
+
+    .shop-heading h2 {
+      font-size: 18px;
+    }
+
+    .shop-heading p {
+      color: var(--muted);
+      font-size: 9px;
+      margin-top: 4px;
+    }
+
+    .shop-wallet {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-width: 75px;
+      padding: 9px;
+      border-radius: 13px;
+      background: rgba(255,209,102,.08);
+      border: 1px solid rgba(255,209,102,.16);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .shop-section {
+      padding: 16px;
+      border-radius: 22px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(20,27,48,.92),
+          rgba(11,16,29,.96)
+        );
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 30px rgba(0,0,0,.22);
+    }
+
+    .shop-section-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 13px;
+    }
+
+    .shop-section-title .icon {
+      width: 39px;
+      height: 39px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(124,92,255,.12);
+      font-size: 19px;
+    }
+
+    .shop-section-title h3 {
+      font-size: 14px;
+    }
+
+    .shop-section-title p {
+      color: var(--muted);
+      font-size: 9px;
+      margin-top: 3px;
+    }
+
+    .token-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 8px;
+    }
+
+    .token-item {
+      position: relative;
+      padding: 10px 5px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.07);
+      text-align: center;
+      transition: .2s;
+    }
+
+    .token-item.selected {
+      border-color: rgba(124,92,255,.7);
+      background: rgba(124,92,255,.1);
+    }
+
+    .token-preview {
+      width: 45px;
+      height: 45px;
+      margin: 0 auto 7px;
+      border-radius: 50%;
+      box-shadow:
+        inset 0 3px 5px rgba(255,255,255,.22),
+        inset 0 -5px 8px rgba(0,0,0,.22),
+        0 7px 15px rgba(0,0,0,.22);
+    }
+
+    .token-name {
+      display: block;
+      font-size: 9px;
+      font-weight: bold;
+    }
+
+    .token-price {
+      display: block;
+      color: var(--gold);
+      font-size: 8px;
+      margin-top: 4px;
+    }
+
+    .owned-label {
+      display: block;
+      color: var(--success);
+      font-size: 8px;
+      margin-top: 4px;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 9px;
+    }
+
+    .theme-item {
+      min-height: 95px;
+      position: relative;
+      overflow: hidden;
+      padding: 13px;
+      border-radius: 17px;
+      border: 1px solid rgba(255,255,255,.07);
+      text-align: right;
+      transition: .2s;
+    }
+
+    .theme-item.selected {
+      border-color: rgba(124,92,255,.75);
+      box-shadow: 0 0 0 1px rgba(124,92,255,.12);
+    }
+
+    .theme-item b {
+      position: relative;
+      z-index: 2;
+      display: block;
+      font-size: 11px;
+    }
+
+    .theme-item span {
+      position: relative;
+      z-index: 2;
+      display: block;
+      margin-top: 6px;
+      font-size: 9px;
+      color: rgba(255,255,255,.7);
+    }
+
+    .theme-price {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      margin-top: 10px;
+      padding: 4px 7px;
+      border-radius: 8px;
+      background: rgba(0,0,0,.25);
+      color: var(--gold) !important;
+    }
+
+    .theme-classic {
+      background: linear-gradient(145deg,#263250,#111827);
+    }
+
+    .theme-night {
+      background: linear-gradient(145deg,#11162d,#03050c);
+    }
+
+    .theme-gold {
+      background: linear-gradient(145deg,#8d6b24,#27200e);
+    }
+
+    .theme-neon {
+      background: linear-gradient(145deg,#42286b,#101e45);
+    }
+
+    .theme-forest {
+      background: linear-gradient(145deg,#1d503b,#0c241b);
+    }
+
+    .theme-fire {
+      background: linear-gradient(145deg,#713328,#29110e);
+    }
+
+    .theme-ice {
+      background: linear-gradient(145deg,#316d88,#112b3d);
+    }
+
+    .theme-space {
+      background: linear-gradient(145deg,#30205d,#0d1029);
+    }
+
+    .theme-legendary {
+      background: linear-gradient(145deg,#8d6720,#3b225d,#142c55);
+    }
+
+    .shop-notice {
+      padding: 12px;
+      border-radius: 15px;
+      background: rgba(53,208,127,.07);
+      border: 1px solid rgba(53,208,127,.12);
+      color: #a8e9c6;
+      font-size: 9px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      z-index: 2000;
+      transform: translateX(-50%) translateY(20px);
+      width: calc(100% - 30px);
+      max-width: 400px;
+      padding: 13px;
+      border-radius: 14px;
+      background: #202a43;
+      border: 1px solid rgba(255,255,255,.1);
+      box-shadow: 0 15px 35px rgba(0,0,0,.4);
+      text-align: center;
+      font-size: 10px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media(max-width:380px) {
+      .token-grid {
+        grid-template-columns: repeat(4,1fr);
+        gap: 5px;
+      }
+
+      .token-preview {
+        width: 39px;
+        height: 39px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app shop-page">
+
+  <!-- HEADER -->
+  <header class="shop-top">
+
+    <button class="back-btn" id="backButton">
+      →
+    </button>
+
+    <div class="shop-heading">
+      <h2>🛒 فروشگاه</h2>
+      <p>Dabrna Royale</p>
+    </div>
+
+    <div class="shop-wallet">
+      🪙 <span id="coinDisplay">0</span>
+    </div>
+
+  </header>
+
+
+  <!-- PLAYER INFO -->
+  <section class="panel">
+
+    <div class="section-title" style="margin-bottom:0;">
+
+      <span>👑</span>
+
+      <div>
+        <h3>پروفایل بازیکن</h3>
+        <p>
+          Level <b id="levelDisplay">1</b>
+          •
+          ⭐ <b id="xpDisplay">0</b> XP
+          •
+          🏆 <b id="trophyDisplay">0</b>
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- TOKENS -->
+  <section class="shop-section">
+
+    <div class="shop-section-title">
+
+      <div class="icon">🎨</div>
+
+      <div>
+        <h3>مهره‌های بازی</h3>
+        <p>مهره مورد علاقه‌ات را انتخاب کن</p>
+      </div>
+
+    </div>
+
+    <div class="token-grid" id="tokenGrid"></div>
+
+  </section>
+
+
+  <!-- CARD THEMES -->
+  <section class="shop-section">
+
+    <div class="shop-section-title">
+
+      <div class="icon">🃏</div>
+
+      <div>
+        <h3>تم کارت دبرنا</h3>
+        <p>ظاهر کارت خودت را تغییر بده</p>
+      </div>
+
+    </div>
+
+    <div class="theme-grid" id="themeGrid"></div>
+
+  </section>
+
+
+  <!-- NOTICE -->
+  <div class="shop-notice">
+    💡 با بردن بازی، XP و سکه بگیر و آیتم‌های بیشتری باز کن!
+  </div>
+
+
+  <footer>
+    <span>👑 Dabrna Royale</span>
+    <span>•</span>
+    <span>Shop & Customize</span>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+"use strict";
+
+/* =========================================
+   STORAGE
+========================================= */
+
+const PLAYER_KEY = "dabrnaRoyalePlayer";
+
+const defaultPlayer = {
+  ageGroup: null,
+  level: 1,
+  xp: 0,
+  coins: 500,
+  trophies: 0,
+  tokenColor: "blue",
+  cardTheme: "classic"
+};
+
+let player = loadPlayer();
+
+function loadPlayer() {
+
+  try {
+
+    const saved =
+      localStorage.getItem(PLAYER_KEY);
+
+    if (saved) {
+
+      return {
+        ...defaultPlayer,
+        ...JSON.parse(saved)
+      };
+
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+
+  return {
+    ...defaultPlayer
+  };
+}
+
+function savePlayer() {
+
+  localStorage.setItem(
+    PLAYER_KEY,
+    JSON.stringify(player)
+  );
+}
+
+
+/* =========================================
+   ITEMS
+========================================= */
+
+const tokens = [
+
+  {
+    id: "blue",
+    name: "آبی",
+    price: 0,
+    background:
+      "linear-gradient(145deg,#4ca7ff,#2466d1)"
+  },
+
+  {
+    id: "red",
+    name: "قرمز",
+    price: 100,
+    background:
+      "linear-gradient(145deg,#ff647d,#c92e49)"
+  },
+
+  {
+    id: "green",
+    name: "سبز",
+    price: 150,
+    background:
+      "linear-gradient(145deg,#54e596,#21985e)"
+  },
+
+  {
+    id: "purple",
+    name: "بنفش",
+    price: 200,
+    background:
+      "linear-gradient(145deg,#b274ff,#7134c7)"
+  },
+
+  {
+    id: "gold",
+    name: "طلایی",
+    price: 500,
+    background:
+      "linear-gradient(145deg,#ffe17c,#c58b1f)"
+  },
+
+  {
+    id: "black",
+    name: "مشکی",
+    price: 650,
+    background:
+      "linear-gradient(145deg,#535b70,#171a24)"
+  },
+
+  {
+    id: "crystal",
+    name: "کریستالی",
+    price: 900,
+    background:
+      "linear-gradient(145deg,#ffffff,#8ee8ff,#7e6cff)"
+  },
+
+  {
+    id: "rainbow",
+    name: "رینبو",
+    price: 1500,
+    background:
+      "linear-gradient(135deg,#ff5c7a,#ffd166,#35d07f,#4ca7ff,#b274ff)"
+  }
+
+];
+
+
+const themes = [
+
+  {
+    id: "classic",
+    name: "Classic",
+    description: "تم کلاسیک",
+    price: 0,
+    className: "theme-classic"
+  },
+
+  {
+    id: "night",
+    name: "Night",
+    description: "شب تاریک",
+    price: 250,
+    className: "theme-night"
+  },
+
+  {
+    id: "gold",
+    name: "Gold",
+    description: "طلایی سلطنتی",
+    price: 500,
+    className: "theme-gold"
+  },
+
+  {
+    id: "neon",
+    name: "Neon",
+    description: "نئون مدرن",
+    price: 700,
+    className: "theme-neon"
+  },
+
+  {
+    id: "forest",
+    name: "Forest",
+    description: "جنگل",
+    price: 800,
+    className: "theme-forest"
+  },
+
+  {
+    id: "fire",
+    name: "Fire",
+    description: "آتش",
+    price: 950,
+    className: "theme-fire"
+  },
+
+  {
+    id: "ice",
+    name: "Ice",
+    description: "یخی",
+    price: 1100,
+    className: "theme-ice"
+  },
+
+  {
+    id: "space",
+    name: "Space",
+    description: "فضایی",
+    price: 1300,
+    className: "theme-space"
+  },
+
+  {
+    id: "legendary",
+    name: "Legendary",
+    description: "افسانه‌ای",
+    price: 2500,
+    className: "theme-legendary"
+  }
+
+];
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const coinDisplay =
+  document.getElementById("coinDisplay");
+
+const levelDisplay =
+  document.getElementById("levelDisplay");
+
+const xpDisplay =
+  document.getElementById("xpDisplay");
+
+const trophyDisplay =
+  document.getElementById("trophyDisplay");
+
+const tokenGrid =
+  document.getElementById("tokenGrid");
+
+const themeGrid =
+  document.getElementById("themeGrid");
+
+const toast =
+  document.getElementById("toast");
+
+
+/* =========================================
+   UI
+========================================= */
+
+function updatePlayerUI() {
+
+  coinDisplay.textContent =
+    player.coins;
+
+  levelDisplay.textContent =
+    player.level;
+
+  xpDisplay.textContent =
+    player.xp;
+
+  trophyDisplay.textContent =
+    player.trophies;
+}
+
+
+/* =========================================
+   TOKEN SHOP
+========================================= */
+
+function renderTokens() {
+
+  tokenGrid.innerHTML = "";
+
+  tokens.forEach(item => {
+
+    const box =
+      document.createElement("button");
+
+    box.className =
+      "token-item";
+
+    if (
+      player.tokenColor === item.id
+    ) {
+      box.classList.add("selected");
+    }
+
+    const preview =
+      document.createElement("div");
+
+    preview.className =
+      "token-preview";
+
+    preview.style.background =
+      item.background;
+
+    const name =
+      document.createElement("span");
+
+    name.className =
+      "token-name";
+
+    name.textContent =
+      item.name;
+
+    const price =
+      document.createElement("span");
+
+    price.className =
+      "token-price";
+
+    if (item.price === 0) {
+
+      price.textContent =
+        "رایگان";
+
+    } else {
+
+      price.textContent =
+        `${item.price} 🪙`;
+    }
+
+    box.appendChild(preview);
+    box.appendChild(name);
+    box.appendChild(price);
+
+    box.addEventListener(
+      "click",
+      () => buyToken(item)
+    );
+
+    tokenGrid.appendChild(box);
+
+  });
+}
+
+
+function buyToken(item) {
+
+  if (
+    player.tokenColor === item.id
+  ) {
+
+    showToast(
+      "✅ این مهره انتخاب شده است."
+    );
+
+    return;
+  }
+
+  if (item.price > player.coins) {
+
+    showToast(
+      "🪙 سکه کافی نداری."
+    );
+
+    return;
+  }
+
+  player.coins -=
+    item.price;
+
+  player.tokenColor =
+    item.id;
+
+  savePlayer();
+
+  updatePlayerUI();
+
+  renderTokens();
+
+  showToast(
+    `🎨 مهره ${item.name} انتخاب شد!`
+  );
+}
+
+
+/* =========================================
+   THEME SHOP
+========================================= */
+
+function renderThemes() {
+
+  themeGrid.innerHTML = "";
+
+  themes.forEach(item => {
+
+    const box =
+      document.createElement("button");
+
+    box.className =
+      `theme-item ${item.className}`;
+
+    if (
+      player.cardTheme === item.id
+    ) {
+      box.classList.add("selected");
+    }
+
+    const name =
+      document.createElement("b");
+
+    name.textContent =
+      item.name;
+
+    const description =
+      document.createElement("span");
+
+    description.textContent =
+      item.description;
+
+    const price =
+      document.createElement("span");
+
+    price.className =
+      "theme-price";
+
+    if (item.price === 0) {
+
+      price.textContent =
+        "رایگان";
+
+    } else {
+
+      price.textContent =
+        `${item.price} 🪙`;
+    }
+
+    box.appendChild(name);
+    box.appendChild(description);
+    box.appendChild(price);
+
+    box.addEventListener(
+      "click",
+      () => buyTheme(item)
+    );
+
+    themeGrid.appendChild(box);
+
+  });
+}
+
+
+function buyTheme(item) {
+
+  if (
+    player.cardTheme === item.id
+  ) {
+
+    showToast(
+      "✅ این تم انتخاب شده است."
+    );
+
+    return;
+  }
+
+  if (item.price > player.coins) {
+
+    showToast(
+      "🪙 سکه کافی نداری."
+    );
+
+    return;
+  }
+
+  player.coins -=
+    item.price;
+
+  player.cardTheme =
+    item.id;
+
+  savePlayer();
+
+  updatePlayerUI();
+
+  renderThemes();
+
+  showToast(
+    `🃏 تم ${item.name} انتخاب شد!`
+  );
+}
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+function showToast(message) {
+
+  clearTimeout(toastTimer);
+
+  toast.textContent =
+    message;
+
+  toast.classList.add("show");
+
+  toastTimer =
+    setTimeout(() => {
+
+      toast.classList.remove("show");
+
+    }, 2200);
+}
+
+
+/* =========================================
+   BACK
+========================================= */
+
+document
+  .getElementById("backButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      window.location.href =
+        "index.html";
+
+    }
+  );
+
+
+/* =========================================
+   INIT
+========================================= */
+
+updatePlayerUI();
+
+renderTokens();
+
+renderThemes();
+</script>
+
+</body>
+</html>
